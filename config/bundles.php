@@ -8,4 +8,6 @@ return [
     'Symfony\Bundle\WebProfilerBundle\WebProfilerBundle' => ['dev' => true, 'test' => true],
     'Doctrine\Bundle\DoctrineCacheBundle\DoctrineCacheBundle' => ['all' => true],
     'Doctrine\Bundle\DoctrineBundle\DoctrineBundle' => ['all' => true],
+    'Symfony\Bundle\SecurityBundle\SecurityBundle' => ['all' => true],
+    'FOS\UserBundle\FOSUserBundle' => ['all' => true],
 ];
