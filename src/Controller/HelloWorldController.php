@@ -36,11 +36,14 @@ class HelloWorldController
 
     /**
      * @param Request $request
+     * @param string $name
      * @return Response
-     * @Route("/", name="hello_index")
+     * @Route("/{name}", name="hello_index")
      */
-    public function indexAction(Request $request): Response
+    public function indexAction(Request $request, string $name): Response
     {
-        return new Response($this->twig->render('HelloWorld/index.html.twig'));
+        return new Response($this->twig->render('@App/HelloWorld/index.html.twig', [
+            'name' => $name
+        ]));
     }
 }
