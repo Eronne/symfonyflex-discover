@@ -1,5 +1,7 @@
 twig:
     paths:
         '%kernel.project_dir%/templates': App
+        templates: ~
+        templates/bundles/FOSUser: FOSUser
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
