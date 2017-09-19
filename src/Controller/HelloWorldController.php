@@ -6,10 +6,10 @@
  */
 
 namespace App\Controller;
+use App\Http\ViewControllerTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
 
 /**
  * Class HelloWorldController
@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class HelloWorldController
 {
+
+    use ViewControllerTrait;
 
     /**
      * @var \Twig_Environment
@@ -42,8 +44,8 @@ class HelloWorldController
      */
     public function indexAction(Request $request, string $name): Response
     {
-        return new Response($this->twig->render('@App/HelloWorld/index.html.twig', [
+        return $this->render('@App/HelloWorld/index.html.twig', [
             'name' => $name
-        ]));
+        ]);
     }
 }

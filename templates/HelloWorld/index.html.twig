@@ -1,5 +1,10 @@
-{% extends "base.html.twig" %}
+{% extends "@App/base.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - Hello World !
+{% endblock title %}
 
 {% block body %}
     <h1>Hello World!</h1>
-{% endblock %}
+    <p>Your name is {{ name }}</p>
+{% endblock body %}
