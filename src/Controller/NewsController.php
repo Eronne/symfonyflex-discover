@@ -1,22 +1,22 @@
 <?php
 /**
- * User: Erwann
- * Date: 19/09/2017
- * Time: 10:22
+ * @author Erwann LETUE <erwann.letue@gmail.com>
+ * Date: 19/09/2017 at 16:21
  */
 
 namespace App\Controller;
+
 use App\Http\ViewControllerTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class HelloWorldController
+ * Class NewsController
  * @package App\Controller
- * @Route("/hello")
+ * @Route("/news")
  */
-class HelloWorldController
+class NewsController
 {
     use ViewControllerTrait;
 
@@ -26,7 +26,7 @@ class HelloWorldController
     private $twig;
 
     /**
-     * HelloWorldController constructor.
+     * NewsController constructor.
      * @param \Twig_Environment $twig
      */
     public function __construct(\Twig_Environment $twig)
@@ -37,14 +37,11 @@ class HelloWorldController
 
     /**
      * @param Request $request
-     * @param string $name
      * @return Response
-     * @Route("/{name}", name="hello_index")
+     * @Route("/", name="news_list")
      */
-    public function indexAction(Request $request, string $name): Response
+    public function listAction(Request $request): Response
     {
-        return $this->render('@App/HelloWorld/index.html.twig', [
-            'name' => $name
-        ]);
+        return $this->render('@App/News/index.html.twig', []);
     }
 }

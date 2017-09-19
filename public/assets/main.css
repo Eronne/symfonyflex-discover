@@ -1,0 +1,18 @@
+body {
+  margin: 0 auto;
+  background: #01d978;
+  background: -webkit-linear-gradient(left, #01d978 0%, #93f9b9 100%);
+  background: -o-linear-gradient(left, #01d978 0%, #93f9b9 100%);
+  background: -ms-linear-gradient(left, #01d978 0%, #93f9b9 100%);
+  background: linear-gradient(to right, #01d978 0%, #93f9b9 100%); }
+  body .page {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    body .page .panel {
+      padding: 4%;
+      border-radius: 6px;
+      background-color: white; }
+
+/*# sourceMappingURL=main.css.map */
