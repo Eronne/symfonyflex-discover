@@ -9,5 +9,6 @@ return [
     'Doctrine\Bundle\DoctrineCacheBundle\DoctrineCacheBundle' => ['all' => true],
     'Doctrine\Bundle\DoctrineBundle\DoctrineBundle' => ['all' => true],
     'Symfony\Bundle\SecurityBundle\SecurityBundle' => ['all' => true],
+    'Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle' => ['all' => true],
     'FOS\UserBundle\FOSUserBundle' => ['all' => true],
 ];
