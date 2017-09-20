@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class HelloWorldController
  * @package App\Controller
- * @Route("/hello")
+ * @Route("/")
  */
 class HelloWorldController
 {
@@ -39,12 +39,10 @@ class HelloWorldController
      * @param Request $request
      * @param string $name
      * @return Response
-     * @Route("/{name}", name="hello_index")
+     * @Route("/", name="hello_index")
      */
-    public function indexAction(Request $request, string $name): Response
+    public function indexAction(Request $request): Response
     {
-        return $this->render('@App/HelloWorld/index.html.twig', [
-            'name' => $name
-        ]);
+        return $this->render('@App/HelloWorld/index.html.twig');
     }
 }

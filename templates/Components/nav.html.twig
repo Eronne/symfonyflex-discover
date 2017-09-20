@@ -1,0 +1,15 @@
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{{ path('hello_index', {'name': 'blabla'}) }}">Symfony Flex Blog</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="{{ path('news_list') }}">News</a></li>
+            <li><a href="{{ path('create_news') }}">Add News</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="{{ path('fos_user_registration_register') }}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="{{ path('fos_user_security_login') }}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        </ul>
+    </div>
+</nav>
