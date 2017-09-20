@@ -52,7 +52,7 @@ class NewsController
     public function listAction(Request $request): Response
     {
         $repository = $this->entityManager->getRepository(News::class);
-        $newsList = $repository->findAll();
+        $newsList = $repository->findAllOrderByCreatedDesc();
 
         return $this->render('@App\News\index.html.twig', [
             "newsList" => $newsList

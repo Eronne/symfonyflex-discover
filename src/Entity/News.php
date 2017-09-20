@@ -6,14 +6,13 @@
 
 namespace App\Entity;
 
-use App\Http\TimestampableTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Class News
  * @package App\Entity
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\NewsRepository")
  */
 class News
 {
@@ -55,7 +54,7 @@ class News
     /**
      * @return mixed
      */
-    public function getCreatedAt()
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
@@ -71,7 +70,7 @@ class News
     /**
      * @return mixed
      */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): \DateTime
     {
         return $this->updatedAt;
     }

@@ -8,6 +8,8 @@
     {% for news in newsList %}
         <h2>{{ news.title }}</h2>
         <p>{{ news.content }}</p>
+        <p>{{ news.createdAt|date }}</p>
+        <p>{{ news.updatedAt|date }}</p>
         <hr>
     {% endfor %}
 {% endblock body %}
