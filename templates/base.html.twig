@@ -9,7 +9,21 @@
     </head>
     <body>
         {% embed '@App/Components/nav.html.twig' %}{% endembed %}
+
+        {% for label, messages in app.flashes %}
+            <div class="alert alert-{{ label }}">
+                <ul>
+                    {% for message in messages %}
+                        <li>
+                            {{ message }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+
         {% block body %}{% endblock %}
+
         {% block javascripts %}{% endblock %}
     </body>
 </html>

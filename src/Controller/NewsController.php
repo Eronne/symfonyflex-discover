@@ -15,6 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -50,23 +51,27 @@ class NewsController
      */
     private $router;
 
+
+    /**
+     * @var FlashBag
+     */
+    private $flashbag;
+
     /**
      * NewsController constructor.
      * @param \Twig_Environment $twig
      * @param EntityManager $entityManager
      * @param FormFactoryInterface $formFactory
      * @param RouterInterface $router
+     * @param FlashBag $flashbag
      */
-    public function __construct(
-        \Twig_Environment $twig,
-        EntityManager $entityManager,
-        FormFactoryInterface $formFactory,
-        RouterInterface $router)
+    public function __construct(\Twig_Environment $twig, EntityManager $entityManager, FormFactoryInterface $formFactory, RouterInterface $router, FlashBag $flashbag)
     {
         $this->twig = $twig;
         $this->entityManager = $entityManager;
         $this->formFactory = $formFactory;
         $this->router = $router;
+        $this->flashbag = $flashbag;
     }
 
 
@@ -107,13 +112,18 @@ class NewsController
         if ($form->isSubmitted() && $form->isValid()){
             $this->entityManager->persist($form->getData());
             $this->entityManager->flush();
+            if (null != $newsId){
+                $this->flashbag->add('success', 'The news has been edited');
+            } else {
+                $this->flashbag->add('success', 'The news has been created');
+            }
 
             return $this->redirectToRoute('news_list');
         }
 
         return $this->render('News\create.html.twig', [
             'form' => $form->createView(),
-            'isEditable' => $newsId
+            'isEditable' => null != $newsId
         ]);
     }
 
@@ -129,6 +139,7 @@ class NewsController
         $news = $this->retrieveNews($newsId);
         $this->entityManager->remove($news);
         $this->entityManager->flush();
+        $this->flashbag->add('success', 'The news has been deleted');
         return $this->redirectToRoute('news_list');
     }
 
