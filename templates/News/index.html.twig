@@ -8,10 +8,12 @@
     {% for news in newsList %}
         <h2>{{ news.title }}</h2>
         <p>{{ news.content }}</p>
-        <p>{{ news.createdAt|date }}</p>
-        <p>{{ news.updatedAt|date }}</p>
+        <p><span class="glyphicon glyphicon-time"></span> &nbsp;{{ news.createdAt|date }} - Last modification à {{ news.updatedAt|date }}</p>
         <a href="{{ path('edit_news', {'newsId': news.id}) }}" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> &nbsp;Edit</a>
-        <a href="#" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span> &nbsp;Delete</a>
+        <form action="{{ path('delete_news', {'newsId': news.id}) }}">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token("delete") }}">
+            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span> &nbsp;Delete</button>
+        </form>
         <hr>
     {% endfor %}
 {% endblock body %}

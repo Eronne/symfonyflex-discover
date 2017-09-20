@@ -15,6 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -97,9 +98,7 @@ class NewsController
         $news = null;
 
         if (null != $newsId){
-            $news = $this->entityManager->getRepository(News::class)->findOneBy([
-                'id' => $newsId
-            ]);
+            $news = $this->retrieveNews($newsId);
         }
 
         $form = $this->formFactory->create(NewsType::class, $news);
@@ -116,5 +115,40 @@ class NewsController
             'form' => $form->createView(),
             'isEditable' => $newsId
         ]);
+    }
+
+
+    /**
+     * @param Request $request
+     * @param int $newsId
+     * @return Response
+     * @Route("/delete/{newsId}", name="delete_news")
+     */
+    public function deleteAction(Request $request, int $newsId): Response
+    {
+        $news = $this->retrieveNews($newsId);
+        $this->entityManager->remove($news);
+        $this->entityManager->flush();
+        return $this->redirectToRoute('news_list');
+    }
+
+
+    /**
+     * @param int $newsId
+     * @return News
+     * @internal param int $news
+     */
+    private function retrieveNews(int $newsId): News
+    {
+        $news = $this->entityManager->getRepository(News::class)->findOneBy([
+            'id' => $newsId
+        ]);
+        if ($news === null){
+            throw new NotFoundHttpException(
+                'The News n° ' . $newsId . ' is not found'
+            );
+        }
+
+        return $news;
     }
 }
