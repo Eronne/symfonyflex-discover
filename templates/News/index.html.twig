@@ -10,6 +10,7 @@
         <p>{{ news.content }}</p>
         <p>{{ news.createdAt|date }}</p>
         <p>{{ news.updatedAt|date }}</p>
+        <a href="{{ path('edit_news', {'newsId': news.id}) }}">Edit</a>
         <hr>
     {% endfor %}
 {% endblock body %}

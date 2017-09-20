@@ -87,12 +87,20 @@ class NewsController
 
     /**
      * @param Request $request
+     * @param int|null $newsId
      * @return Response
      * @Route("/create", name="create_news")
+     * @Route("/edit/{newsId}", name="edit_news")
      */
-    public function createAction(Request $request): Response
+    public function createOrEditAction(Request $request, ?int $newsId = null): Response
     {
-        $form = $this->formFactory->create(NewsType::class);
+        if (null != $newsId){
+            $news = $this->entityManager->getRepository(News::class)->findOneBy([
+                'id' => $newsId
+            ]);
+        }
+
+        $form = $this->formFactory->create(NewsType::class, $news);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
