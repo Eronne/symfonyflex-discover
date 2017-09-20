@@ -6,7 +6,9 @@
 
 namespace App\Controller;
 
+use App\Entity\News;
 use App\Http\ViewControllerTrait;
+use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,12 +28,19 @@ class NewsController
     private $twig;
 
     /**
+     * @var EntityManager
+     */
+    private $entityManager;
+
+    /**
      * NewsController constructor.
      * @param \Twig_Environment $twig
+     * @param EntityManager $entityManager
      */
-    public function __construct(\Twig_Environment $twig)
+    public function __construct(\Twig_Environment $twig, EntityManager $entityManager)
     {
         $this->twig = $twig;
+        $this->entityManager = $entityManager;
     }
 
 
@@ -42,6 +51,11 @@ class NewsController
      */
     public function listAction(Request $request): Response
     {
-        return $this->render('@App/News/index.html.twig', []);
+        $repository = $this->entityManager->getRepository(News::class);
+        $newsList = $repository->findAll();
+
+        return $this->render('@App\News\index.html.twig', [
+            "newsList" => $newsList
+        ]);
     }
 }

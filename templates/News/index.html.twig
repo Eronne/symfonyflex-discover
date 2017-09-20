@@ -4,4 +4,10 @@
 
 {% block body %}
     <h1>List of news</h1>
+
+    {% for news in newsList %}
+        <h2>{{ news.title }}</h2>
+        <p>{{ news.content }}</p>
+        <hr>
+    {% endfor %}
 {% endblock body %}

@@ -11,4 +11,5 @@ return [
     'Symfony\Bundle\SecurityBundle\SecurityBundle' => ['all' => true],
     'Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle' => ['all' => true],
     'FOS\UserBundle\FOSUserBundle' => ['all' => true],
+    'Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle' => ['all' => true],
 ];
