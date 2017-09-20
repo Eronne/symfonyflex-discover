@@ -3,9 +3,8 @@
 {% block title %}{{ parent() }} - News{% endblock title %}
 
 {% block body %}
-    <h1>List of news</h1>
-
     {% for news in newsList %}
+        <h1>List of news</h1>
         <h2>{{ news.title }}</h2>
         <p>{{ news.content }}</p>
         <p><span class="glyphicon glyphicon-time"></span> &nbsp;{{ news.createdAt|date }} - Last modification à {{ news.updatedAt|date }}</p>
@@ -15,5 +14,8 @@
             <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> &nbsp;Delete</button>
         </form>
         <hr>
+    {% else %}
+        <h2>At this time, there is nos news on the blog :'(</h2>
+        <p>See you later!</p>
     {% endfor %}
 {% endblock body %}
