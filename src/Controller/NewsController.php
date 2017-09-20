@@ -94,6 +94,8 @@ class NewsController
      */
     public function createOrEditAction(Request $request, ?int $newsId = null): Response
     {
+        $news = null;
+
         if (null != $newsId){
             $news = $this->entityManager->getRepository(News::class)->findOneBy([
                 'id' => $newsId
@@ -111,7 +113,8 @@ class NewsController
         }
 
         return $this->render('News\create.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'isEditable' => $newsId
         ]);
     }
 }
