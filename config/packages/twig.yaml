@@ -5,3 +5,5 @@ twig:
         templates/bundles/FOSUser: FOSUser
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    form_themes:
+        - 'Form/layout.html.twig'

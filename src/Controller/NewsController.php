@@ -7,9 +7,11 @@
 namespace App\Controller;
 
 use App\Entity\News;
+use App\Form\NewsType;
 use App\Http\ViewControllerTrait;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -32,15 +34,23 @@ class NewsController
      */
     private $entityManager;
 
+
+    /**
+     * @var FormFactoryInterface
+     */
+    private $formFactory;
+
     /**
      * NewsController constructor.
      * @param \Twig_Environment $twig
      * @param EntityManager $entityManager
+     * @param FormFactoryInterface $formFactory
      */
-    public function __construct(\Twig_Environment $twig, EntityManager $entityManager)
+    public function __construct(\Twig_Environment $twig, EntityManager $entityManager, FormFactoryInterface $formFactory)
     {
         $this->twig = $twig;
         $this->entityManager = $entityManager;
+        $this->formFactory = $formFactory;
     }
 
 
@@ -56,6 +66,27 @@ class NewsController
 
         return $this->render('@App\News\index.html.twig', [
             "newsList" => $newsList
+        ]);
+    }
+
+
+    /**
+     * @param Request $request
+     * @return Response
+     * @Route("/create", name="create_news")
+     */
+    public function createAction(Request $request): Response
+    {
+        $form = $this->formFactory->create(NewsType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $this->entityManager->persist($form->getData());
+            $this->entityManager->flush();
+        }
+
+        return $this->render('News\create.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 }

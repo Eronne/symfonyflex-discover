@@ -1,0 +1,11 @@
+{% extends '@App/base.html.twig' %}
+
+{% block title %}{{ parent() }} - Add news{% endblock title %}
+
+{% block body %}
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+
+        <button type="submit">Create</button>
+    {{ form_end(form) }}
+{% endblock %}
