@@ -1,7 +1,7 @@
 framework:
     secret: '%env(APP_SECRET)%'
     #default_locale: en
-    #csrf_protection: ~
+    csrf_protection: true
     #http_method_override: true
     #trusted_hosts: ~
     # https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
@@ -14,4 +14,5 @@ framework:
     #fragments: ~
     php_errors:
         log: true
-
+    validation:
+        enable_annotations: true
