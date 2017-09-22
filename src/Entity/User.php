@@ -7,6 +7,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -15,6 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class User
  * @package App\Entity
  * @ORM\Entity()
+ * @ApiResource()
  */
 class User extends BaseUser
 {

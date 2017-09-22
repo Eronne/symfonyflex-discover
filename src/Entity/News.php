@@ -6,6 +6,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -14,6 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class News
  * @package App\Entity
  * @ORM\Entity(repositoryClass="App\Repository\NewsRepository")
+ * @ApiResource()
  */
 class News
 {

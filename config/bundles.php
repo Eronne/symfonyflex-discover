@@ -12,4 +12,5 @@ return [
     'Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle' => ['all' => true],
     'FOS\UserBundle\FOSUserBundle' => ['all' => true],
     'Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle' => ['all' => true],
+    'ApiPlatform\Core\Bridge\Symfony\Bundle\ApiPlatformBundle' => ['all' => true],
 ];
