@@ -11,6 +11,7 @@ use App\Entity\User;
 use App\Form\NewsType;
 use App\Http\RoutingControllerTrait;
 use App\Http\ViewControllerTrait;
+use App\Storage\LastUpdatedNewsStorage;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -65,6 +66,12 @@ class NewsController
      */
     private $tokenStorage;
 
+
+    /**
+     * @var LastUpdatedNewsStorage
+     */
+    private $lastUpdatedNews;
+
     /**
      * NewsController constructor.
      * @param \Twig_Environment $twig
@@ -73,6 +80,7 @@ class NewsController
      * @param RouterInterface $router
      * @param FlashBag $flashbag
      * @param TokenStorageInterface $tokenStorage
+     * @param LastUpdatedNewsStorage $lastUpdatedNewsStorage
      */
     public function __construct(
         \Twig_Environment $twig,
@@ -80,7 +88,8 @@ class NewsController
         FormFactoryInterface $formFactory,
         RouterInterface $router,
         FlashBag $flashbag,
-        TokenStorageInterface $tokenStorage)
+        TokenStorageInterface $tokenStorage,
+        LastUpdatedNewsStorage $lastUpdatedNewsStorage)
     {
         $this->twig = $twig;
         $this->entityManager = $entityManager;
@@ -88,6 +97,7 @@ class NewsController
         $this->router = $router;
         $this->flashbag = $flashbag;
         $this->tokenStorage = $tokenStorage;
+        $this->lastUpdatedNews = $lastUpdatedNewsStorage;
     }
 
 
@@ -100,9 +110,11 @@ class NewsController
     {
         $repository = $this->entityManager->getRepository(News::class);
         $newsList = $repository->findAllOrderByCreatedDesc();
+        $lastNews = $this->lastUpdatedNews->get();
 
         return $this->render('@App\News\index.html.twig', [
-            "newsList" => $newsList
+            "newsList" => $newsList,
+            "lastNews" => $lastNews
         ]);
     }
 
@@ -140,6 +152,7 @@ class NewsController
 
             if (null != $newsId){
                 $this->flashbag->add('success', 'The news has been edited');
+                $this->lastUpdatedNews->set($form->getData());
             } else {
                 $this->flashbag->add('success', 'The news has been created');
             }
@@ -164,6 +177,7 @@ class NewsController
     {
         $news = $this->retrieveNews($newsId);
         $this->entityManager->remove($news);
+        $this->lastUpdatedNews->remove($news);
         $this->entityManager->flush();
         $this->flashbag->add('success', 'The news has been deleted');
         return $this->redirectToRoute('news_list');

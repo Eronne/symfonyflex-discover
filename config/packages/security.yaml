@@ -25,4 +25,6 @@ security:
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/news/create$, role: ROLE_USER }
+        - { path: ^/news/edit, role: ROLE_USER }
+        - { path: ^/news/delete, role: ROLE_USER }

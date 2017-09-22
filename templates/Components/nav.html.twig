@@ -8,8 +8,12 @@
             <li><a href="{{ path('create_news') }}">Add News</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="{{ path('fos_user_registration_register') }}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="{{ path('fos_user_security_login') }}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                <li><a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon glyphicon-log-out"></span> Logout</a></li>
+            {% else %}
+                <li><a href="{{ path('fos_user_registration_register') }}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a href="{{ path('fos_user_security_login') }}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            {% endif %}
         </ul>
     </div>
 </nav>
