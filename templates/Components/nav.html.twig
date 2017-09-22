@@ -6,6 +6,8 @@
         <ul class="nav navbar-nav">
             <li><a href="{{ path('news_list') }}">News</a></li>
             <li><a href="{{ path('create_news') }}">Add News</a></li>
+            <li><a href="{{ path('albums_list') }}">Albums</a></li>
+            <li><a href="{{ path('create_albums') }}">Add Albums</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}

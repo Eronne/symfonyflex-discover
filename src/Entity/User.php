@@ -32,4 +32,10 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="App\Entity\News", mappedBy="author")
      */
     protected $newsList;
+
+    /**
+     * @var Album
+     * @ORM\OneToMany(targetEntity="App\Entity\Album", mappedBy="author")
+     */
+    protected $albumList;
 }

@@ -1,0 +1,14 @@
+{% extends '@App/base.html.twig' %}
+
+{% block title %}{{ parent() }} - Add news{% endblock title %}
+
+{% block body %}
+    <h1>Create / Edit albums</h1>
+
+    <h1>{{ isEditable ? "Edit Album " ~ form.vars.data.title : "Create album" }}</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit">{{ isEditable ? 'Edit' : 'Create' }}</button>
+    {{ form_end(form) }}
+{% endblock %}

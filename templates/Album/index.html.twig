@@ -4,4 +4,18 @@
 
 {% block body %}
     <h1>Albums</h1>
+
+    {% for album in albumList %}
+        <a href=""><h3>{{ album.title }}</h3></a>
+
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            <div class="actions">
+                <a href="{{ path('edit_albums', {'albumId': album.id}) }}" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> &nbsp;Edit</a>
+                <form action="{{ path('delete_albums', {'albumId': album.id}) }}">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token("delete") }}">
+                    <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> &nbsp;Delete</button>
+                </form>
+            </div>
+        {% endif %}
+    {% endfor %}
 {% endblock body %}
