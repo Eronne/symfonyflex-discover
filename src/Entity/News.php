@@ -39,6 +39,13 @@ class News
      */
     protected $content;
 
+    /**
+     * @var User
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="newsList")
+     * @ORM\JoinColumn(name="author_id", referencedColumnName="id", nullable=false)
+     */
+    protected $author;
+
 
     /**
      * @var \DateTime

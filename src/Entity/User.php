@@ -24,4 +24,10 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @var News
+     * @ORM\OneToMany(targetEntity="App\Entity\News", mappedBy="author")
+     */
+    protected $newsList;
 }
