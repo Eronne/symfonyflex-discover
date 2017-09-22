@@ -5,8 +5,10 @@
 {% block body %}
     <h1>Albums</h1>
 
+    <a href="{{ path('create_albums') }}">Add Albums</a>
+
     {% for album in albumList %}
-        <a href=""><h3>{{ album.title }}</h3></a>
+        <a href="{{ path('show_albums', {'albumId': album.id}) }}"><h3>{{ album.title }}</h3></a>
 
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             <div class="actions">

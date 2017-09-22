@@ -41,7 +41,7 @@ class AlbumController
     /**
      * @var EntityManager
      */
-    private $entityManger;
+    private $entityManager;
 
     /**
      * @var FormFactoryInterface
@@ -66,7 +66,7 @@ class AlbumController
     /**
      * AlbumController constructor.
      * @param \Twig_Environment $twig
-     * @param EntityManager $entityManger
+     * @param EntityManager $entityManager
      * @param FormFactoryInterface $formFactory
      * @param RouterInterface $router
      * @param TokenStorageInterface $tokenStorage
@@ -74,14 +74,14 @@ class AlbumController
      */
     public function __construct(
         \Twig_Environment $twig,
-        EntityManager $entityManger,
+        EntityManager $entityManager,
         FormFactoryInterface $formFactory,
         RouterInterface $router,
         TokenStorageInterface $tokenStorage,
         FlashBag $flashBag)
     {
         $this->twig = $twig;
-        $this->entityManger = $entityManger;
+        $this->entityManager = $entityManager;
         $this->formFactory = $formFactory;
         $this->router = $router;
         $this->tokenStorage = $tokenStorage;
@@ -96,11 +96,27 @@ class AlbumController
      */
     public function listAction(Request $request): Response
     {
-        $repository = $this->entityManger->getRepository(Album::class);
+        $repository = $this->entityManager->getRepository(Album::class);
         $albumList = $repository->findAllOrderByCreatedDesc();
 
         return $this->render('@App\Album\index.html.twig', [
             "albumList" => $albumList
+        ]);
+    }
+
+
+    /**
+     * @param Request $request
+     * @param int|null $albumId
+     * @return Response
+     * @Route("/show/{albumId}", name="show_albums")
+     */
+    public function showAction(Request $request, ?int $albumId): Response
+    {
+        $album = $this->entityManager->getRepository(Album::class)->find($albumId);
+
+        return $this->render('@App\Album\show.html.twig', [
+            'album' => $album
         ]);
     }
 
@@ -130,8 +146,8 @@ class AlbumController
 
         if ($form->isSubmitted() && $form->isValid()){
 
-            $this->entityManger->persist($form->getData());
-            $this->entityManger->flush();
+            $this->entityManager->persist($form->getData());
+            $this->entityManager->flush();
 
             if (null != $albumId){
                 $this->flashbag->add('success', 'The album has been edited');
@@ -158,8 +174,8 @@ class AlbumController
     public function deleteAction(Request $request, int $albumId): Response
     {
         $album = $this->retrieveAlbum($albumId);
-        $this->entityManger->remove($album);
-        $this->entityManger->flush();
+        $this->entityManager->remove($album);
+        $this->entityManager->flush();
         $this->flashbag->add('success', 'The album has been deleted');
         return $this->redirectToRoute('albums_list');
     }
@@ -172,7 +188,7 @@ class AlbumController
      */
     private function retrieveAlbum(int $albumId): Album
     {
-        $album = $this->entityManger->getRepository(Album::class)->findOneBy([
+        $album = $this->entityManager->getRepository(Album::class)->findOneBy([
             'id' => $albumId
         ]);
         if ($album === null){

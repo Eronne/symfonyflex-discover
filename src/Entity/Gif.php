@@ -3,23 +3,24 @@
  * Created by IntelliJ IDEA.
  * User: eletue
  * Date: 22/09/2017
- * Time: 14:06
+ * Time: 16:17
  */
 
 namespace App\Entity;
+
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * Class Album
- * @package App\Entity
- * @ORM\Entity(repositoryClass="App\Repository\AlbumsRepository")
- */
-class Album
-{
 
+/**
+ * Class Gif
+ * @package App\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\GifRepository")
+ */
+class Gif
+{
     /**
      * @ORM\Id()
      * @ORM\Column(type="integer")
@@ -28,27 +29,24 @@ class Album
     protected $id;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\Length(min=3)
+     */
+    protected $tags;
+
+    /**
      * @var string
-     * @ORM\Column(type="string", length=80)
+     * @ORM\Column(type="string", length=200)
      * @Assert\NotBlank()
-     * @Assert\Length(max=80)
+     * @Assert\Length(max=200)
      */
-    protected $title;
+    protected $url;
 
     /**
-     * @var User
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="albumList")
-     * @ORM\JoinColumn(name="author_id", referencedColumnName="id", nullable=false)
-     * @Assert\NotBlank()
+     * @var Album
+     * @ORM\ManyToOne(targetEntity="App\Entity\Album", inversedBy="gifList")
      */
-    protected $author;
-
-
-    /**
-     * @var Gif
-     * @ORM\OneToMany(targetEntity="App\Entity\Gif", mappedBy="album")
-     */
-    protected $gifList;
+    protected $album;
 
     /**
      * @var \DateTime
@@ -81,53 +79,51 @@ class Album
     }
 
     /**
+     * @return mixed
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @param mixed $tags
+     */
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
+    }
+
+    /**
      * @return string
      */
-    public function getTitle(): ?string
+    public function getUrl(): string
     {
-        return $this->title;
+        return $this->url;
     }
 
     /**
-     * @param string $title
+     * @param string $url
+     */
+    public function setUrl(string $url)
+    {
+        $this->url = $url;
+    }
+
+    /**
      * @return Album
      */
-    public function setTitle(string $title)
+    public function getAlbum(): Album
     {
-        $this->title = $title;
-        return $this;
+        return $this->album;
     }
 
     /**
-     * @return User
+     * @param Album $album
      */
-    public function getAuthor(): User
+    public function setAlbum(Album $album)
     {
-        return $this->author;
-    }
-
-    /**
-     * @param User $author
-     */
-    public function setAuthor(User $author)
-    {
-        $this->author = $author;
-    }
-
-    /**
-     * @return Gif
-     */
-    public function getGifList()
-    {
-        return $this->gifList;
-    }
-
-    /**
-     * @param Gif $gifList
-     */
-    public function setGifList(Gif $gifList)
-    {
-        $this->gifList = $gifList;
+        $this->album = $album;
     }
 
     /**
@@ -161,6 +157,4 @@ class Album
     {
         $this->updatedAt = $updatedAt;
     }
-
-
 }

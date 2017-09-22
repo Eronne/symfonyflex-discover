@@ -5,6 +5,8 @@
 {% block body %}
     <h1>List of news</h1>
 
+    <a href="{{ path('create_news') }}">Add News</a>
+
     {% if lastNews %}
         <h2>Last Updated news</h2>
         <a href=""><h3>{{ lastNews.title }}</h3></a>

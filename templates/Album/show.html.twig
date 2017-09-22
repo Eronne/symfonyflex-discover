@@ -1,0 +1,12 @@
+{% extends '@App/base.html.twig' %}
+
+{% block title %}{{ parent() }} - {{ album.title }}{% endblock title %}
+
+{% block body %}
+    <h1>Album : {{ album.title }}</h1>
+
+    {% for gif in album.gifList %}
+        <img src="{{ gif.url }}" alt="Gif">
+        <p>{{ gif.id }}</p>
+    {% endfor %}
+{% endblock body %}
