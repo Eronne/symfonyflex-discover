@@ -7,6 +7,7 @@
 namespace App\Controller;
 
 use App\Entity\News;
+use App\Entity\User;
 use App\Form\NewsType;
 use App\Http\RoutingControllerTrait;
 use App\Http\ViewControllerTrait;
@@ -18,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * Class NewsController
@@ -57,6 +59,12 @@ class NewsController
      */
     private $flashbag;
 
+
+    /**
+     * @var TokenStorageInterface
+     */
+    private $tokenStorage;
+
     /**
      * NewsController constructor.
      * @param \Twig_Environment $twig
@@ -64,14 +72,22 @@ class NewsController
      * @param FormFactoryInterface $formFactory
      * @param RouterInterface $router
      * @param FlashBag $flashbag
+     * @param TokenStorageInterface $tokenStorage
      */
-    public function __construct(\Twig_Environment $twig, EntityManager $entityManager, FormFactoryInterface $formFactory, RouterInterface $router, FlashBag $flashbag)
+    public function __construct(
+        \Twig_Environment $twig,
+        EntityManager $entityManager,
+        FormFactoryInterface $formFactory,
+        RouterInterface $router,
+        FlashBag $flashbag,
+        TokenStorageInterface $tokenStorage)
     {
         $this->twig = $twig;
         $this->entityManager = $entityManager;
         $this->formFactory = $formFactory;
         $this->router = $router;
         $this->flashbag = $flashbag;
+        $this->tokenStorage = $tokenStorage;
     }
 
 
@@ -110,8 +126,18 @@ class NewsController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
+            /** @var User $user */
+            $user = $this->tokenStorage->getToken()->getUser();
+
+            if (null == $newsId){
+                $form->getData()->setTitle(
+                    $form->getData()->getTitle() . ' - ' . $user->getUsername()
+                );
+            }
+
             $this->entityManager->persist($form->getData());
             $this->entityManager->flush();
+
             if (null != $newsId){
                 $this->flashbag->add('success', 'The news has been edited');
             } else {
