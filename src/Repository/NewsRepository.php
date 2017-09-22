@@ -12,7 +12,7 @@ class NewsRepository extends EntityRepository
 {
 
     /**
-x     * @return array\News[]
+x    * @return array\News[]
      */
     public function findAllOrderByCreatedDesc(): array
     {

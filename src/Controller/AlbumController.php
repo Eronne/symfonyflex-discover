@@ -31,7 +31,6 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 class AlbumController
 {
     use RoutingControllerTrait;
-
     use ViewControllerTrait;
 
     /**
@@ -98,7 +97,7 @@ class AlbumController
     public function listAction(Request $request): Response
     {
         $repository = $this->entityManger->getRepository(Album::class);
-        $albumList = $repository->findAll();
+        $albumList = $repository->findAllOrderByCreatedDesc();
 
         return $this->render('@App\Album\index.html.twig', [
             "albumList" => $albumList

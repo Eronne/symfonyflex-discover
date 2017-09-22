@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class AlbumsRepository extends EntityRepository
 {
+    /**
+    x    * @return array\News[]
+     */
+    public function findAllOrderByCreatedDesc(): array
+    {
+        return $this->createQueryBuilder('n')
+            ->orderBy('n.createdAt', 'DESC')
+            ->getQuery()
+            ->execute();
+    }
 }
