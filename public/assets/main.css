@@ -1,4 +1,8 @@
 body {
   margin: 0 auto; }
+  body .container .actions {
+    display: flex; }
+    body .container .actions a:first-of-type {
+      margin-right: 30px; }
 
 /*# sourceMappingURL=main.css.map */

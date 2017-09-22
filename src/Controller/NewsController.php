@@ -177,7 +177,7 @@ class NewsController
     {
         $news = $this->retrieveNews($newsId);
         $this->entityManager->remove($news);
-        $this->lastUpdatedNews->remove($news);
+        $this->lastUpdatedNews->removeIfExists($news);
         $this->entityManager->flush();
         $this->flashbag->add('success', 'The news has been deleted');
         return $this->redirectToRoute('news_list');

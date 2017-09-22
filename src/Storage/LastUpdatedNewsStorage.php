@@ -39,7 +39,7 @@ class LastUpdatedNewsStorage
         return $this->storage->get(static::STORAGE_KEY_NAME);
     }
 
-    public function remove(News $news): void
+    public function removeIfExists(News $news): void
     {
         if ($news->getId() === $this->get()->getId()) $this->storage->remove(static::STORAGE_KEY_NAME);
     }

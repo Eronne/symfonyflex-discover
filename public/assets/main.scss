@@ -1,3 +1,13 @@
 body{
   margin: 0 auto;
+
+  .container{
+    .actions{
+      display: flex;
+
+      a:first-of-type{
+        margin-right: 30px;
+      }
+    }
+  }
 }
